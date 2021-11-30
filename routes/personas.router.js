@@ -1,10 +1,10 @@
 const { response } = require('express');
 const express = require('express');
 const connection = require('./../database/database');
-const CitasServices = require('./../services/citas.service');
+const PersonasServices = require('./../services/personas.service');
 
 const router = express.Router();
-const service = new CitasServices();
+const service = new PersonasServices();
 
 router.get('/xxx', async(req, res) => {
   res.json({text: 'the ad doesnt exist'});
@@ -68,11 +68,14 @@ router.post('/', async(req, res) =>{
     apellido_materno: req.body.apellido_materno,
     telefono_fijo: req.body.telefono_fijo,
     whatsapp: req.body.whatsapp,
-    razon: req.body.razon,
-    descripcion: req.body.descripcion,
-    fecha: req.body.fecha,
-    hora: req.body.hora,
-    dentista_id: req.body.dentista_id,
+    estado_civil: req.body.estado_civil,
+    nacion_originaria: req.body.nacion_originaria,
+    grado_educativo: req.body.grado_educativo,
+    idioma: req.body.idioma,
+    lugar_nacimiento: req.body.lugar_nacimiento,
+    sexo: req.body.sexo,
+    fecha_nacimiento: req.body.fecha_nacimiento,
+    ocupacion: req.body.ocupacion,
     StatementType: req.body.StatementType,
     idupdate: req.body.idupdate
   };
@@ -102,11 +105,14 @@ router.patch('/:id', async(req, res) =>{
     apellido_materno: req.body.apellido_materno,
     telefono_fijo: req.body.telefono_fijo,
     whatsapp: req.body.whatsapp,
-    razon: req.body.razon,
-    descripcion: req.body.descripcion,
-    fecha: req.body.fecha,
-    hora: req.body.hora,
-    dentista_id: req.body.dentista_id,
+    estado_civil: req.body.estado_civil,
+    nacion_originaria: req.body.nacion_originaria,
+    grado_educativo: req.body.grado_educativo,
+    idioma: req.body.idioma,
+    lugar_nacimiento: req.body.lugar_nacimiento,
+    sexo: req.body.sexo,
+    fecha_nacimiento: req.body.fecha_nacimiento,
+    ocupacion: req.body.ocupacion,
     StatementType: req.body.StatementType,
     idupdate: req.body.idupdate
   };

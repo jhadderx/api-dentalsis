@@ -7,7 +7,7 @@ class CitasServices {
   }
 
   getAll = result => {
-    connection.query("SELECT * FROM citas", (err, res) => {
+    connection.query("SELECT * FROM cita_v_calendar", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -20,7 +20,20 @@ class CitasServices {
   };
 
   findById = (id, result) => {
-    connection.query(`SELECT * FROM citas WHERE idcita = ${id}`, (err, res) => {
+    connection.query(`SELECT * FROM citas_v WHERE paciente LIKE '%${id}%' OR whatsapp LIKE '%${id}%'`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      console.log("ads: ", res);
+      result(null, res);
+    });
+  };
+
+  GetOneById = (id, result) => {
+    connection.query(`SELECT * FROM citas_v WHERE idcita = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -39,7 +52,7 @@ class CitasServices {
 
 
   create = (newValues, result) => {
-    connection.query("INSERT INTO citas SET ?", newValues, (err, res) => {
+    connection.query("CALL dentalsys.solicita_cita_crud(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [newValues.ci, newValues.direccion, newValues.nombre, newValues.apellido_paterno, newValues.apellido_materno, newValues.telefono_fijo, newValues.whatsapp, newValues.razon, newValues.descripcion, newValues.fecha, newValues.hora, newValues.dentista_id, newValues.StatementType, newValues.idupdate], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -51,30 +64,20 @@ class CitasServices {
     });
   };
 
-  updateById = (id, values, result) => {
-    connection.query(
-      "UPDATE ad SET title = ?, description = ?, age = ?, category = ?, city = ?, address = ?, whatsapp = ?, userId = ?, position = ?, verificate = ? WHERE adId = ?",
-      [values.title, values.description, values.age, values.category, values.city, values.address, values.whatsapp, values.userId, values.position, values.verificate, id],
-      (err, res) => {
-        if (err) {
-          console.log("error: ", err);
-          result(null, err);
-          return;
-        }
-
-        if (res.affectedRows == 0) {
-          result({ kind: "no se encontró el id" }, null);
-          return;
-        }
-
-        console.log("Anuncio actualizado: ", { id: id, ...values });
-        result(null, { id: id, ...values });
+  updateById = (id, newValues, result) => {
+    connection.query("CALL dentalsys.solicita_cita_crud(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [newValues.ci, newValues.direccion, newValues.nombre, newValues.apellido_paterno, newValues.apellido_materno, newValues.telefono_fijo, newValues.whatsapp, newValues.razon, newValues.descripcion, newValues.fecha, newValues.hora, newValues.dentista_id, newValues.StatementType, id], (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
       }
-    );
+      console.log("valores ingresados: ", { id: res.insertId, ...newValues });
+      result(null, { id: res.insertId, ...newValues });
+    });
   };
 
   remove = (id, result) => {
-    connection.query("DELETE FROM citas WHERE idcita = ?", id, (err, res) => {
+    connection.query("CALL dentalsys.solicita_cita_crud( 0, '', '', '', '', 0, 0, '', '', '', '', 0, 'DELETE', ?)", id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

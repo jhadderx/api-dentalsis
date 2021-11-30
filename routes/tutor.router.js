@@ -1,10 +1,10 @@
 const { response } = require('express');
 const express = require('express');
 const connection = require('./../database/database');
-const CitasServices = require('./../services/citas.service');
+const TutorServices = require('./../services/tutor.service');
 
 const router = express.Router();
-const service = new CitasServices();
+const service = new TutorServices();
 
 router.get('/xxx', async(req, res) => {
   res.json({text: 'the ad doesnt exist'});
@@ -61,6 +61,7 @@ router.post('/', async(req, res) =>{
   }
 
   const values = {
+    idpaciente: req.body.idpaciente,
     ci: req.body.ci,
     direccion: req.body.direccion,
     nombre: req.body.nombre,
@@ -68,13 +69,6 @@ router.post('/', async(req, res) =>{
     apellido_materno: req.body.apellido_materno,
     telefono_fijo: req.body.telefono_fijo,
     whatsapp: req.body.whatsapp,
-    razon: req.body.razon,
-    descripcion: req.body.descripcion,
-    fecha: req.body.fecha,
-    hora: req.body.hora,
-    dentista_id: req.body.dentista_id,
-    StatementType: req.body.StatementType,
-    idupdate: req.body.idupdate
   };
 
   service.create(values, (err, data) => {
@@ -95,6 +89,7 @@ router.patch('/:id', async(req, res) =>{
   }
 
   const values = {
+    idpaciente: req.body.idpaciente,
     ci: req.body.ci,
     direccion: req.body.direccion,
     nombre: req.body.nombre,
@@ -102,11 +97,6 @@ router.patch('/:id', async(req, res) =>{
     apellido_materno: req.body.apellido_materno,
     telefono_fijo: req.body.telefono_fijo,
     whatsapp: req.body.whatsapp,
-    razon: req.body.razon,
-    descripcion: req.body.descripcion,
-    fecha: req.body.fecha,
-    hora: req.body.hora,
-    dentista_id: req.body.dentista_id,
     StatementType: req.body.StatementType,
     idupdate: req.body.idupdate
   };

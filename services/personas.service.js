@@ -1,13 +1,13 @@
 const faker = require('faker');
 const connection = require('../database/database');
-class DentistasServices {
+class PersonasServices {
 
   constructor() {
-    this.dentistas = [];
+    this.personas = [];
   }
 
   getAll = result => {
-    connection.query("SELECT * FROM dentistas_v", (err, res) => {
+    connection.query("SELECT * FROM pacientes_contacto_v", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -20,7 +20,7 @@ class DentistasServices {
   };
 
   findById = (id, result) => {
-    connection.query(`SELECT * FROM dentistas_v WHERE nombre LIKE '%${id}%'`, (err, res) => {
+    connection.query(`SELECT * FROM pacientes_contacto_v WHERE nombre LIKE '%${id}%'`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -33,7 +33,7 @@ class DentistasServices {
   };
 
   GetOneById = (id, result) => {
-    connection.query(`SELECT * FROM dentistas_v WHERE iddentista = ${id}`, (err, res) => {
+    connection.query(`SELECT * FROM pacientes_contacto_v WHERE idpaciente = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -52,7 +52,7 @@ class DentistasServices {
 
 
   create = (newValues, result) => {
-    connection.query("CALL dentalsys.dentista_crud(?,?,?,?,?,?,?,?,?,?,?)",[newValues.ci, newValues.direccion, newValues.nombre, newValues.apellido_paterno, newValues.apellido_materno, newValues.telefono_fijo, newValues.whatsapp, newValues.correo, newValues.especialidad, newValues.StatementType, newValues.idupdate], (err, res) => {
+    connection.query("CALL dentalsys.paciente_crud(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",[newValues.ci, newValues.direccion, newValues.nombre, newValues.apellido_paterno, newValues.apellido_materno, newValues.telefono_fijo, newValues.whatsapp, newValues.estado_civil, newValues.nacion_originaria, newValues.grado_educativo, newValues.idioma, newValues.lugar_nacimiento, newValues.sexo, newValues.fecha_nacimiento, newValues.ocupacion, newValues.StatementType, newValues.idupdate], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -64,7 +64,7 @@ class DentistasServices {
   };
 
   updateById = (id, newValues, result) => {
-    connection.query("CALL dentalsys.dentista_crud(?,?,?,?,?,?,?,?,?,?,?)",[newValues.ci, newValues.direccion, newValues.nombre, newValues.apellido_paterno, newValues.apellido_materno, newValues.telefono_fijo, newValues.whatsapp, newValues.correo, newValues.especialidad, newValues.StatementType, id], (err, res) => {
+    connection.query("CALL dentalsys.paciente_crud(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",[newValues.ci, newValues.direccion, newValues.nombre, newValues.apellido_paterno, newValues.apellido_materno, newValues.telefono_fijo, newValues.whatsapp, newValues.estado_civil, newValues.nacion_originaria, newValues.grado_educativo, newValues.idioma, newValues.lugar_nacimiento, newValues.sexo, newValues.fecha_nacimiento, newValues.ocupacion, newValues.StatementType, id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -77,7 +77,7 @@ class DentistasServices {
 
 
   remove = (id, result) => {
-    connection.query("CALL dentalsys.dentista_crud(0, '', '', '', '', 0, 0, '', '', 'DELETE', ?)", id, (err, res) => {
+    connection.query("CALL dentalsys.paciente-crud(0, '', '', '', '', 0, 0, '', '', '', '', '', '', '', '', 'DELETE', ?)", id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -95,4 +95,4 @@ class DentistasServices {
   };
 
 }
-module.exports = DentistasServices;
+module.exports = PersonasServices;
